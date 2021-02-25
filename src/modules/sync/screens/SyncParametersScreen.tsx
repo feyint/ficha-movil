@@ -104,35 +104,35 @@ const SyncParametersScreen = () => {
       loadingFNCINTTEA
     ) {
     } else {
-      // syncFVCELEVIV();
-      // syncFVCCONVIV();
-      // syncFUCDEPART();
-      // syncFUCMUNICI();
-      // syncFUCTIPTER();
-      // syncFUCBARVER();
-      // syncFUCRESGUA();
+      syncFVCELEVIV();
+      syncFVCCONVIV();
+      syncFUCDEPART();
+      syncFUCMUNICI();
+      syncFUCTIPTER();
+      syncFUCBARVER();
+      syncFUCRESGUA();
       syncFUCZONCUI();
       syncFUCZONCUI_FUCBARVER();
-      // syncFNCTIPIDE();
-      // syncFNCPAREN();
-      // syncFNCOCUPAC();
-      // syncFNCPUEIND();
-      // syncFNCLUNIND();
-      // syncFNCGENERO();
-      // syncFNCELEPER();
-      // syncFNCCONPER();
-      // syncFUCPAIS();
-      // syncFNCORGANI();
-      // syncFNCDESARM();
-      // syncFNCELESAL();
-      // syncFNCCONSAL();
-      // syncFNCELEREP();
-      // syncFNCCONREP();
-      // syncFUCTIPTER_FUCRESGUA();
-      // syncSGCSISPAR();
-      // syncFNCINTIMC();
-      // syncFSCSEMAFO();
-      // syncFNCINTTEA();
+      syncFNCTIPIDE();
+      syncFNCPAREN();
+      syncFNCOCUPAC();
+      syncFNCPUEIND();
+      syncFNCLUNIND();
+      syncFNCGENERO();
+      syncFNCELEPER();
+      syncFNCCONPER();
+      syncFUCPAIS();
+      syncFNCORGANI();
+      syncFNCDESARM();
+      syncFNCELESAL();
+      syncFNCCONSAL();
+      syncFNCELEREP();
+      syncFNCCONREP();
+      syncFUCTIPTER_FUCRESGUA();
+      syncSGCSISPAR();
+      syncFNCINTIMC();
+      syncFSCSEMAFO();
+      syncFNCINTTEA();
     }
 
     //await this.clearPollEntities();

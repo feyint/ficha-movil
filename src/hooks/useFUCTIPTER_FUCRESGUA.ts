@@ -50,19 +50,49 @@ export function useFUCTIPTER_FUCRESGUA() {
   async function countEntity(): Promise<void> {
     return database.countEntity('FUCTIPTER_FUCRESGUA').then(setCount);
   }
+  async function bulkFUCTIPTER_FUCRESGUA(
+    newItems: Array<FUCTIPTER_FUCRESGUA>,
+  ): Promise<void> {
+    let statementValues = '(?, ?, ?),'.repeat(newItems.length);
+    statementValues = statementValues.substr(0, statementValues.length - 1);
+    let statement = `INSERT INTO {0} 
+    (ID, FUCRESGUA_ID, FUCTIPTER_ID)
+    VALUES ${statementValues}; `;
+    let params: any[] = [];
+    newItems.forEach((newItem) => {
+      params.push(newItem.ID);
+      params.push(newItem.FUCRESGUA_ID);
+      params.push(newItem.FUCTIPTER_ID);
+    });
+    return await database.executeQuery(
+      'FUCTIPTER_FUCRESGUA',
+      statement,
+      params,
+    );
+  }
 
   async function syncFUCTIPTER_FUCRESGUA() {
     setLoading(true);
     await database.clearEntity('FUCTIPTER_FUCRESGUA');
     let service = new SyncCatalogService();
     let result = await service.getEntity('FuctipterFucresgua');
-    result.data.map((item: any) => {
-      createFUCTIPTER_FUCRESGUA({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let items: Array<FUCTIPTER_FUCRESGUA> = [];
+    for (let i = 0; i < result.data.length; i++) {
+      const item = result.data[i];
+      items.push({
         ID: item.fuctipterFucresguaPK.id,
         FUCRESGUA_ID: item.fuctipterFucresguaPK.fucresguaId,
         FUCTIPTER_ID: item.fuctipterFucresguaPK.fuctipterId,
       });
-    });
+      if (items.length > 100) {
+        await bulkFUCTIPTER_FUCRESGUA(items);
+        items = [];
+      }
+    }
+    if (items.length > 0) {
+      await bulkFUCTIPTER_FUCRESGUA(items);
+    }
     setLoading(false);
     countEntity();
   }

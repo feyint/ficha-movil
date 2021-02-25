@@ -26,13 +26,11 @@ requestH = {
       name: 'WebAdmin-SUIIN-2.0',
     },
   };
-
   headers = {
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     }
-
 }
   //Enviar Numero de datos por Entidad
   async enviarDataCount(data: any) {

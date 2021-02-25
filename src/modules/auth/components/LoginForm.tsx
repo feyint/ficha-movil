@@ -23,7 +23,6 @@ const _LoginForm = (props: any) => {
   });
   const [visible, setVisible] = React.useState(false);
   const onSubmit = (data: any) => {
-    console.log("entro");
     var params = new URLSearchParams();
     params.append('grant_type', 'password');
     params.append('client_id', 'suiin_mobile_qa');
@@ -33,8 +32,6 @@ const _LoginForm = (props: any) => {
     var jwtDecode = require('jwt-decode');
     var token = resp.data.access_token;
     var decoded = jwtDecode(token);
-    console.log(decoded);
-    
     var objData = 
       {
         id: decoded.id,

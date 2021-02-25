@@ -12,7 +12,10 @@ import CardView from 'react-native-cardview';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useFUBUBIVIV} from '../../../hooks';
 
+import AsyncStorage from '@react-native-community/async-storage';
+
 const HomeScreen = (props: any) => {
+  
   // TODO ajustar el filtro por queries y grupos, agregar fecha de creacion a ficha
   const [houses, setHouses] = useState<any[]>([]);
   const [filteredHouses, setfilteredHouses] = useState<any[]>([]);
@@ -61,6 +64,7 @@ const HomeScreen = (props: any) => {
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <Appbar.Header>
         <Appbar.Content title="SIPSALUD" />
+        <Appbar.Action icon="cellphone-erase" onPress={_cerrarSesion} />
       </Appbar.Header>
       <View style={styles.checkboxContainer}>
         <Checkbox
@@ -162,6 +166,11 @@ const HomeScreen = (props: any) => {
     props.clearFUBUBIVIV();
     navigation.navigate('ManageHousingScreen');
   }
+
+  function _cerrarSesion() {  
+    AsyncStorage.clear();
+    navigation.navigate('Iniciar Sesión');
+  }
   async function goToHouse(value: any) {
     let vi = await filterFUBUBIVIV(value.ID, true);
     await props.setFUBUBIVIV(vi);
@@ -180,6 +189,8 @@ const CardItem = (data: any) => {
     </Text>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   container2: {

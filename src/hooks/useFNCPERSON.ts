@@ -283,17 +283,71 @@ export function useFNCPERSON() {
             FNCPAREN_ID=${item.FNCPAREN_ID ? item.FNCPAREN_ID : null}, 
             FNCGENERO_ID=${item.FNCGENERO_ID ? item.FNCGENERO_ID : null},
             FNCPUEIND_ID=${item.FNCPUEIND_ID ? item.FNCPUEIND_ID : null},
-            FVBENCUES_ID=${item.FVBENCUES_ID ? item.FVBENCUES_ID : null}
+            FVBENCUES_ID=${item.FVBENCUES_ID ? item.FVBENCUES_ID : null},
+            ESTADO=1
             WHERE ID = ${item.ID}`;
     return await database
       .executeQuery('FNCPERSON', statement)
       .then((results) => {
         getFNCPERSONbyID(item.ID);
+        getNucleos(item.ID);
       })
       .finally(() => {
         setLoading(false);
       });
   }
+  async function getNucleos(personID: any): Promise<void> {
+    setLoading(true);
+    let statement = `SELECT * FROM {0} 
+    INNER JOIN FNBNUCVIV_FNCPERSON ON FNBNUCVIV_FNCPERSON.FNBNUCVIV_ID = FNBNUCVIV.ID 
+    WHERE FNBNUCVIV_FNCPERSON.FNCPERSON_ID = ${personID}`;
+    return await database
+      .executeQuery('FNBNUCVIV', statement)
+      .then((results) => {
+        const count = results.rows.length;
+        const items = [];
+        for (let i = 0; i < count; i++) {
+          const row = results.rows.item(i);
+          udpateNucleos(results.rows.item(i).ID);
+          udpateViviendas(results.rows.item(i).FUBUBIVIV_ID);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  async function udpateViviendas(FUBUBIVIV_ID: any): Promise<void> {
+
+    let statement = `UPDATE {0} SET
+    ESTADO=1
+    WHERE ID = ${FUBUBIVIV_ID}`;
+    return await database
+    .executeQuery('FUBUBIVIV', statement)
+    .then((results) => {
+    })
+    .finally(() => {
+    setLoading(false);
+    });
+
+  }  
+  
+  async function udpateNucleos(ID: any): Promise<void> {
+
+    let statement = `UPDATE {0} SET
+    ESTADO=1
+    WHERE ID = ${ID}`;
+    return await database
+    .executeQuery('FNBNUCVIV', statement)
+    .then((results) => {
+    })
+    .finally(() => {
+    setLoading(false);
+    });
+
+  }  
+
+
   async function countEntity(): Promise<void> {
     return database.countEntity('FNCPERSON').then(setCount);
   }

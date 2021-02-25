@@ -63,7 +63,6 @@ const SyncParametersScreen = () => {
   const {countFSCSEMAFO, syncFSCSEMAFO, loadingFSCSEMAFO} = useFSCSEMAFO();
   const {countFNCINTTEA, syncFNCINTTEA, loadingFNCINTTEA} = useFNCINTTEA();
   const {
-    syncFUCZONCUI_FUCBARVER,
     countFUCZONCUI_FUCBARVER,
     loadingFUCZONCUI_FUCBARVER,
   } = useFUCZONCUI_FUCBARVER();
@@ -83,7 +82,6 @@ const SyncParametersScreen = () => {
       loadingFUCBARVER ||
       loadingFUCRESGUA ||
       loadingFUCZONCUI ||
-      loadingFUCZONCUI_FUCBARVER ||
       loadingFNCTIPIDE ||
       loadingFNCOCUPAC ||
       loadingFNCPUEIND ||
@@ -111,8 +109,7 @@ const SyncParametersScreen = () => {
       // syncFUCTIPTER();
       // syncFUCBARVER();
       // syncFUCRESGUA();
-      syncFUCZONCUI();
-      syncFUCZONCUI_FUCBARVER();
+      // syncFUCZONCUI();
       // syncFNCTIPIDE();
       // syncFNCPAREN();
       // syncFNCOCUPAC();
@@ -125,14 +122,16 @@ const SyncParametersScreen = () => {
       // syncFNCORGANI();
       // syncFNCDESARM();
       // syncFNCELESAL();
-      // syncFNCCONSAL();
       // syncFNCELEREP();
-      // syncFNCCONREP();
       // syncFUCTIPTER_FUCRESGUA();
-      // syncSGCSISPAR();
-      // syncFNCINTIMC();
-      // syncFSCSEMAFO();
-      // syncFNCINTTEA();
+      syncSGCSISPAR();
+      syncFNCCONSAL();
+      syncFNCCONREP();
+      syncFUCTIPTER_FUCRESGUA();
+      syncSGCSISPAR();
+      syncFNCINTIMC();
+      syncFSCSEMAFO();
+      syncFNCINTTEA();
     }
 
     //await this.clearPollEntities();
@@ -290,7 +289,6 @@ const SyncParametersScreen = () => {
           loadingFUCBARVER ||
           loadingFUCRESGUA ||
           loadingFUCZONCUI ||
-          loadingFUCZONCUI_FUCBARVER ||
           loadingFNCTIPIDE ||
           loadingFNCOCUPAC ||
           loadingFNCPUEIND ||

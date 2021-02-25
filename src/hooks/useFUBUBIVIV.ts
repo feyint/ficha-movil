@@ -279,7 +279,8 @@ export function useFUBUBIVIV() {
       COORDENADA_X= ?, 
       COORDENADA_Y= ?, 
       DIRECCION= ?, 
-      FUCZONCUI_FUCBARVER_ID= ?
+      FUCZONCUI_FUCBARVER_ID= ?,
+      ESTADO=1
     WHERE ID = ${item.ID}`;
     let params = [
       item.CODIGO,

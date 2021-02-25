@@ -10,7 +10,8 @@ import {connect} from 'react-redux';
 import {authAction} from '../state/actions';
 import {Snackbar} from 'react-native-paper';
 import {useEffect} from 'react';
-
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
 const schemaForm = yup.object().shape({
   username: yup.string().required(),
   password: yup.string().required(),
@@ -20,18 +21,43 @@ const _LoginForm = (props: any) => {
   const {handleSubmit, control, errors} = useForm({
     resolver: yupResolver(schemaForm),
   });
-
   const [visible, setVisible] = React.useState(false);
   const onSubmit = (data: any) => {
-    const res = props.authAction(data);
-    if (res) {
-      navigation.navigate('MenuHome');
-    } else {
-      setVisible(!visible);
-    }
+    console.log("entro");
+    var params = new URLSearchParams();
+    params.append('grant_type', 'password');
+    params.append('client_id', 'suiin_mobile_qa');
+    params.append('username', data.username);
+    params.append('password', data.password);
+    axios.post('https://neptuno.linuxeros.co:8380/auth/realms/SUIIN_SECURITY/protocol/openid-connect/token', params).then(function(resp){
+    var jwtDecode = require('jwt-decode');
+    var token = resp.data.access_token;
+    var decoded = jwtDecode(token);
+    console.log(decoded);
+    
+    var objData = 
+      {
+        id: decoded.id,
+        nombres: decoded.nombres,
+        apellidos: decoded.apellidos,
+        access_token: token
+      };
+    try {
+      AsyncStorage.getItem('database_form').then((value) => {
+        if (value !== null) {
+          AsyncStorage.setItem('database_form', JSON.stringify(objData));
+          navigation.navigate('MenuHome');
+        } else {
+          navigation.navigate('MenuHome');
+        }
+      });
+    } catch (error) {}
+    }).catch(function(error){  
+      setVisible(!visible);    
+    });
   };
   useEffect(() => {
-    navigation.navigate('MenuHome');
+    navigation.navigate('Iniciar Sesión');
   }, []);
 
   const onDismissSnackBar = () => setVisible(false);

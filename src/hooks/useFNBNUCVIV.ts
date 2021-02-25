@@ -218,7 +218,8 @@ export function useFNBNUCVIV() {
       OBSERVACION= ?, 
       LUGAR_COCINA= ?, 
       HUMO_DENTRO= ?, 
-      ACCESO_INTERNET= ?
+      ACCESO_INTERNET= ?,
+      ESTADO=1
     WHERE ID = ${item.ID}`;
     let params = [
       item.CODIGO,
@@ -237,11 +238,28 @@ export function useFNBNUCVIV() {
       .executeQuery('FNBNUCVIV', statement, params)
       .then((results) => {
         getFNBNUCVIVbyID(item.ID);
+        udpateViviendas(item.FUBUBIVIV_ID);
       })
       .finally(() => {
         setLoading(false);
       });
   }
+
+
+  async function udpateViviendas(FUBUBIVIV_ID: any): Promise<void> {
+
+    let statement = `UPDATE {0} SET
+    ESTADO=1
+    WHERE ID = ${FUBUBIVIV_ID}`;
+    return await database
+    .executeQuery('FUBUBIVIV', statement)
+    .then((results) => {
+    })
+    .finally(() => {
+    setLoading(false);
+    });
+
+  }  
   async function countEntity(): Promise<void> {
     return database.countEntity('FNBNUCVIV').then(setCount);
   }
